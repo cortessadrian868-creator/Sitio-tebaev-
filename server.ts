@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
@@ -88,7 +89,17 @@ const INITIAL_MOCK_STUDENTS = [
   }
 ];
 
+const SCHOOL_DATA_PATH = path.join(process.cwd(), "src/data/persistent_school_data.json");
+const STUDENTS_DATA_PATH = path.join(process.cwd(), "src/data/persistent_students.json");
+
 let CURRENT_MOCK_STUDENTS = [...INITIAL_MOCK_STUDENTS];
+if (fs.existsSync(STUDENTS_DATA_PATH)) {
+  try {
+    CURRENT_MOCK_STUDENTS = JSON.parse(fs.readFileSync(STUDENTS_DATA_PATH, "utf-8"));
+  } catch (err) {
+    console.error("Error loading persistent student records:", err);
+  }
+}
 
 const DEFAULT_INSTITUTIONAL_DATA = {
   name: "Telebachillerato del Estado de Veracruz",
@@ -139,6 +150,13 @@ const DEFAULT_INSTITUTIONAL_DATA = {
 };
 
 let CURRENT_INSTITUTIONAL_DATA = { ...DEFAULT_INSTITUTIONAL_DATA };
+if (fs.existsSync(SCHOOL_DATA_PATH)) {
+  try {
+    CURRENT_INSTITUTIONAL_DATA = JSON.parse(fs.readFileSync(SCHOOL_DATA_PATH, "utf-8"));
+  } catch (err) {
+    console.error("Error loading persistent school data:", err);
+  }
+}
 
 // Function to dynamically compile School Context for Gemini based on custom administrative edits
 function getSchoolContext() {
@@ -230,6 +248,11 @@ app.get("/api/institution", (req, res) => {
 
 app.post("/api/institution", (req, res) => {
   CURRENT_INSTITUTIONAL_DATA = { ...CURRENT_INSTITUTIONAL_DATA, ...req.body };
+  try {
+    fs.writeFileSync(SCHOOL_DATA_PATH, JSON.stringify(CURRENT_INSTITUTIONAL_DATA, null, 2), "utf-8");
+  } catch (err) {
+    console.error("Error saving persistent school data:", err);
+  }
   return res.json({ success: true, data: CURRENT_INSTITUTIONAL_DATA });
 });
 
@@ -241,6 +264,11 @@ app.post("/api/students/sync", (req, res) => {
   const { students } = req.body;
   if (Array.isArray(students)) {
     CURRENT_MOCK_STUDENTS = [...students];
+    try {
+      fs.writeFileSync(STUDENTS_DATA_PATH, JSON.stringify(CURRENT_MOCK_STUDENTS, null, 2), "utf-8");
+    } catch (err) {
+      console.error("Error saving persistent student records:", err);
+    }
     return res.json({ success: true, count: CURRENT_MOCK_STUDENTS.length });
   }
   return res.status(400).json({ error: "Invalid data format or missing students parameter." });
@@ -249,6 +277,16 @@ app.post("/api/students/sync", (req, res) => {
 app.post("/api/reset", (req, res) => {
   CURRENT_MOCK_STUDENTS = [...INITIAL_MOCK_STUDENTS];
   CURRENT_INSTITUTIONAL_DATA = { ...DEFAULT_INSTITUTIONAL_DATA };
+  try {
+    if (fs.existsSync(SCHOOL_DATA_PATH)) {
+      fs.unlinkSync(SCHOOL_DATA_PATH);
+    }
+    if (fs.existsSync(STUDENTS_DATA_PATH)) {
+      fs.unlinkSync(STUDENTS_DATA_PATH);
+    }
+  } catch (err) {
+    console.error("Error clearing persistent data files:", err);
+  }
   return res.json({ success: true, data: CURRENT_INSTITUTIONAL_DATA, students: CURRENT_MOCK_STUDENTS });
 });
 

@@ -1,48 +1,11 @@
+import persistentSchoolData from "./persistent_school_data.json";
+
 export const INSTITUTIONAL_DATA = {
-  name: "Telebachillerato del Estado de Veracruz",
-  center: "Centro Mahuixtlan",
-  acronym: "TEBAEV",
-  cct: "30ETH0185M",
-  coordinatingTitle: "Coordinador del Centro",
-  director: "Mtro. Arturo Ramírez Solano",
-  motto: "Estudio, Patria y Progreso",
-  phone: "228 816 0215", // Standard SEV / local prefix
-  email: "tebaevmahuixtlan@sev.gob.mx",
+  ...persistentSchoolData,
   location: {
-    address: "Calle Principal s/n, Localidad de Mahuixtlan",
-    municipality: "Coatepec, Veracruz",
-    postalCode: "91615",
-    coordinates: { lat: 19.4147, lng: -96.9292 } // Mahuixtlan, Coatepec region
-  },
-  schedule: "Lunes a Viernes, Turno Vespertino: 14:00 - 19:30 hrs",
-  stats: [
-    { label: "Estudiantes Activos", value: "+120" },
-    { label: "Zona Escolar", value: "Coatepec" },
-    { label: "Aulas Equipadas", value: "6" },
-    { label: "Talleres Laborales", value: "2" }
-  ],
-  gallery: [
-    {
-      id: "gal-1",
-      url: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600&auto=format&fit=crop",
-      description: "Fachada del acceso principal de nuestro plantel TEBAEV Mahuixtlan, con áreas verdes y accesos seguros para toda la comunidad escolar."
-    },
-    {
-      id: "gal-2",
-      url: "https://images.unsplash.com/photo-1548345680-f5475ea5df84?q=80&w=600&auto=format&fit=crop",
-      description: "Aula de informática equipada, donde los alumnos realizan actividades de capacitación laboral y proyectos tecnológicos."
-    },
-    {
-      id: "gal-3",
-      url: "https://images.unsplash.com/photo-1510070112810-d4e9a46d9e91?q=80&w=600&auto=format&fit=crop",
-      description: "Área de biblioteca escolar y cubículos de estudio, un lugar diseñado para el autoaprendizaje y debate académico cooperativo."
-    },
-    {
-      id: "gal-4",
-      url: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?q=80&w=600&auto=format&fit=crop",
-      description: "Explanada central cívica del plantel donde se efectúan los honores semanales a la bandera y se celebran eventos culturales veracruzanos."
-    }
-  ]
+    ...persistentSchoolData.location,
+    coordinates: { lat: 19.4147, lng: -96.9292 }
+  }
 };
 
 export const COURSES_BY_SEMESTER = [
