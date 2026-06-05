@@ -1,6 +1,6 @@
 {
   "name": "TEBAEV Mahuixtlan",
-  "description": "Sitio web del Telebachillerato de Mahuixtlan, Coatepec, Veracruz. Incluye información institucional, oferta académica, portal de boletas y consultor escolar con Inteligencia Artificial.",
+  "description": "Sitio web del Telebachillerato de Mahuixtlan, Coatepec, Veracruz. Incluye informacion institucional, oferta academica, portal de boletas y consultor escolar con Inteligencia Artificial.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
