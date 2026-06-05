@@ -4,6 +4,7 @@ import {
 } from "lucide-react";
 import { Student, Subject } from "../types";
 import { motion, AnimatePresence } from "motion/react";
+import schoolActivitiesImg from "../assets/images/school_activities_1780596803770.png";
 
 interface EditorPanelProps {
   schoolData: any;
@@ -715,7 +716,7 @@ export default function EditorPanel({
                     <label className="text-[9px] font-mono font-bold text-slate-400 block uppercase">Fotografía Principal de Talleres / Actividades</label>
                     <div className="flex items-center gap-3">
                       <img
-                        src={localSchoolData.activitiesImage || "/src/assets/images/school_activities_1780596803770.png"}
+                        src={localSchoolData.activitiesImage || schoolActivitiesImg}
                         alt="Actividades"
                         className="w-12 h-12 rounded-lg object-cover border border-slate-200 shrink-0"
                         referrerPolicy="no-referrer"

@@ -1,6 +1,7 @@
 import { MapPin, Phone, Mail, Award, CheckCircle, Flame, Sprout, Camera } from "lucide-react";
 import { INSTITUTIONAL_DATA } from "../data/schoolData";
 import { motion } from "motion/react";
+import schoolActivitiesImg from "../assets/images/school_activities_1780596803770.png";
 
 interface AboutSectionProps {
   schoolData?: any;
@@ -198,7 +199,7 @@ export default function AboutSection({ schoolData }: AboutSectionProps) {
           <div className="lg:col-span-7 z-10 flex justify-center w-full">
             <div className="relative group overflow-hidden rounded-2xl border-4 border-white/5 shadow-2xl transition-all duration-300 hover:border-tebaev-gold/40 w-full max-w-2xl">
               <img
-                src={schoolData?.activitiesImage || "/src/assets/images/school_activities_1780596803770.png"}
+                src={schoolData?.activitiesImage || schoolActivitiesImg}
                 alt="Estudiantes en el aula de cómputo de TEBAEV desarrollando actividades prácticas del plantel"
                 className="w-full h-auto object-cover transform transition-transform duration-700 hover:scale-105"
                 referrerPolicy="no-referrer"
